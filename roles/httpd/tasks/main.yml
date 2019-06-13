@@ -1,0 +1,7 @@
+- name: include vars from ansible os family
+  include_vars: "{{ ansible_os_family }}.yml"
+- name: install httpd
+  package:
+    name: "{{ apache }}"
+    state: absent
+

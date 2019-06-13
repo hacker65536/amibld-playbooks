@@ -1,0 +1,38 @@
+version: 0.2
+
+
+env:
+  variables:
+    INSTANCE_TYPE: "c4.large"
+    PRIVATE_KEY_FILE: "ssh_private_key"
+    PLAYBOOK_FILE: "site.yml"
+    PLATFORM: "centos6"
+    EBS_VOLUME_SIZE: "100"
+phases:
+  install:
+    commands:
+      - echo "$SSH_KEY_PAIR" > ssh_private_key && chmod 600 ssh_private_key
+      - env 
+  pre_build:
+    commands:
+      - curl -qSsL -o aws_credentials.json http://169.254.170.2/$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI > aws_credentials.json
+      - aws configure set region $AWS_REGION
+      - aws configure set aws_access_key_id $(jq -r '.AccessKeyId' aws_credentials.json)
+      - aws configure set aws_secret_access_key $(jq -r '.SecretAccessKey' aws_credentials.json)
+      - aws configure set aws_session_token $(jq -r '.Token' aws_credentials.json)
+      - aws configure list
+      - echo $ROLES
+      - echo '[{"hosts":"all","become":"yes","roles":[]}]' | jq --argjson foo $(echo -n "${ROLES/%,/}" | jq -R -r -c 'split(",")') '.[].roles += $foo' | json2yaml > site.yml
+      - cat site.yml
+
+  build:
+    commands:
+      - bash packer.sh
+  post_build:
+    commands:
+      - echo "post_build"
+      - |
+        [[ -s manifest.json ]] && bash dynamo_putitem.sh
+
+
+

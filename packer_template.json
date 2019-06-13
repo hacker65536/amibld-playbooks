@@ -1,0 +1,82 @@
+{
+  "variables": {
+    "security_group_id": "{{env `SECURITY_GROUP_ID`}}",
+    "subnet_id": "{{env `SUBNET_ID`}}",
+    "vpc_id": "{{env `VPC_ID`}}",
+    "region": "{{env `AWS_REGION`}}",
+    "instance_type": "{{env `INSTANCE_TYPE`}}",
+    "ssh_username": "{{env `SSH_USERNAME`}}",
+    "ssh_keypair_name": "{{env `SSH_KEY_PAIR_NAME`}}",
+    "ssh_private_key_file": "{{env `PRIVATE_KEY_FILE`}}",
+    "ssh_interface": "{{env `SSH_INTERFACE`}}",
+    "commit_id": "{{env `CODEBUILD_RESOLVED_SOURCE_VERSION`| sed \"s/(.{7}).*/$1/\" }}",
+    "authorname": "{{env `USER_NAME`}}",
+    "volume_size": "{{env `EBS_VOLUME_SIZE`}}",
+    "playbook_file": "{{env `PLAYBOOK_FILE`}}",
+    "platform": "{{env `PLATFORM`}}",
+    "source_ami": "{{env `SOURCE_AMI`}}",
+    "ami_description": "{{env `DESCRIPTION`}}",
+    "usefor": "{{env `USEFOR`}}"
+  },
+  "builders": [
+    {
+      "name": "{{user `platform`}}",
+      "type": "amazon-ebs",
+      "associate_public_ip_address": "true",
+      "ami_name": "AMIBLD-{{upper build_name}}-{{user `commit_id`}}-{{timestamp}}",
+      "ami_description": "{{user `ami_description`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "region": "{{user `region`}}",
+      "source_ami": "{{user `source_ami`}}",
+      "vpc_id": "{{user `vpc_id`}}",
+      "subnet_id": "{{user `subnet_id`}}",
+      "security_group_id": "{{user `security_group_id`}}",
+      "ssh_username": "{{user `ssh_username`}}",
+      "ssh_keypair_name": "{{user `ssh_keypair_name`}}",
+      "ssh_private_key_file": "{{user `ssh_private_key_file`}}",
+      "ssh_interface": "{{user `ssh_interface`}}",
+      "ena_support": true,
+      "launch_block_device_mappings": [
+        {
+          "device_name": "/dev/xvda",
+          "volume_size": "{{user `volume_size`}}",
+          "volume_type": "gp2",
+          "delete_on_termination": "true"
+        }
+      ],
+      "run_tags": {
+        "Name": "AMIBLD-{{upper build_name}}-{{user `commit_id`}}",
+        "Author": "{{ user `authorname`}}",
+        "Platform": "{{ user `platform`}}"
+      },
+      "tags": {
+        "Name": "AMIBLD-{{upper build_name}}-{{user `commit_id`}}",
+        "Author": "{{ user `authorname`}}",
+        "Platform": "{{ user `platform`}}",
+        "Usefor": "{{ user `usefor`}}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "user": "{{user `ssh_username`}}",
+      "playbook_file": "{{user `playbook_file`}}",
+      "use_sftp": "false",
+      "ansible_env_vars": [
+        "ANSIBLE_HOST_KEY_CHECKING=False"
+      ],
+      "extra_arguments": [
+        "--extra-vars",
+        "--timeout=60"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest.json",
+      "strip_path": true
+    }
+  ]
+}

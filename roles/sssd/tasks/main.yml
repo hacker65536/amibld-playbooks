@@ -1,0 +1,13 @@
+- name: sssd-ldap
+  yum: name={{ item }}
+  with_items:
+    - sssd
+    - openldap-clients
+    - sssd-ldap
+    - authconfig
+
+
+- name: sssd start
+  service: name=sssd
+   state=started
+   enabled=yes

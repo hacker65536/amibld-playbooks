@@ -1,4 +1,23 @@
+---
+# https://pkg.jenkins.io/redhat/
+
+- name: download jenkins.repo
+  get_url:
+    url: https://pkg.jenkins.io/redhat/jenkins.repo
+    dest: /etc/yum.repos.d/jenkins.repo
+  when:
+    - ansible_os_family == 'RedHat'
+
+- name: import jenkins repo key
+  rpm_key:
+    state: present
+    key: http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
+  when:
+    - ansible_os_family == 'RedHat'
+
 - name: install jenkins
-  package:
+  yum:
     name: jenkins
     state: present
+  when:
+    - ansible_os_family == 'RedHat'

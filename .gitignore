@@ -1,3 +1,5 @@
 ansible.cfg
 hosts
+ansible_log
+test.yml
 *.swp

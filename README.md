@@ -36,7 +36,7 @@ EOF
 ```
 
 ```console
-cat <<'EOF' > test.yml
+$ cat <<'EOF' > test.yml
 - hosts: srv
   become: yes
   roles:

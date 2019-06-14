@@ -12,7 +12,11 @@
 | amibld-codebuild-ubuntu18 | ![]()
 
 
-
+| facts / OS                         | amazonlinux2 | centos7 | amazonlinux | centos6 | ubuntu18 |
+|------------------------------------|--------------|---------|-------------|---------|----------|
+| ansible_distribution               | Amazon       | CentOS  | Amazon      | CentOS  | Ubuntu   |
+| ansible_distribution_major_version | 2            | 7       | NA          | 6       | 18       |
+| ansible_service_mgr                | systemd      | systemd | upstart     | upstart | systemd  |
 
 
 ## testing 

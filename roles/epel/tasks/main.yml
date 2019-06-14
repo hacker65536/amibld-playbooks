@@ -1,0 +1,4 @@
+---
+- name: install epel
+  package:
+    name: epel

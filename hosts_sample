@@ -1,0 +1,14 @@
+[amz2]
+172.31.13.150 ansible_connection=ssh ansible_user=ec2-user
+
+[cent7]
+172.31.8.59 ansible_connection=ssh ansible_user=centos
+
+[amz]
+172.31.4.165 ansible_connection=ssh ansible_user=ec2-user
+
+[cent6]
+172.31.7.81 ansible_connection=ssh ansible_user=centos
+
+[ubuntu18]
+172.31.8.222 ansible_connection=ssh ansible_user=ubuntu

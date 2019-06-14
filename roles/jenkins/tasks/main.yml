@@ -1,0 +1,4 @@
+- name: install jenkins
+  package:
+    name: jenkins
+    state: present

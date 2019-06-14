@@ -1,4 +1,11 @@
 ---
 - name: install epel
+  command: amazon-linux-extras install -y epel
+  when:
+  - ansible_facts['distribution'] == "Amazon" and ansible_facts['distribution_major_version'] == "2"
+
+
+- name: install epel-release
   package:
-    name: epel
+    name: epel-release
+    state: present

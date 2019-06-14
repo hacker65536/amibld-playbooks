@@ -17,6 +17,7 @@
 | ansible_distribution               | Amazon       | CentOS  | Amazon      | CentOS  | Ubuntu   |
 | ansible_distribution_major_version | 2            | 7       | NA          | 6       | 18       |
 | ansible_service_mgr                | systemd      | systemd | upstart     | upstart | systemd  |
+| ansible_os_family                  | RedHat       | RedHat  | RedHat      | RedHat  | Debian   |
 
 
 ## testing 

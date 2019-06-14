@@ -21,23 +21,27 @@
 $ touch ansible_log
 ```
 ```console
+$ cp /path/key_pair .
+```
+```console
 $ cat <<'EOF' > ansible.cfg
 [defaults]
 remote_user=centos
 host_key_checking = False
 log_path=ansible_log
+private_key_file=keypair
 EOF
 ```
 ```console
 $ cat <<'EOF' > hosts
 [amz2]
-172.31.24.xxx
+172.31.24.xxx ansible_user=ec2-user
 EOF
 ```
 
 ```console
 $ cat <<'EOF' > test.yml
-- hosts: srv
+- hosts: amz2
   become: yes
   roles:
 #    - { role: '{{ platform }}/epel' }

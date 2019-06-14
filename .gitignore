@@ -3,3 +3,4 @@ hosts
 ansible_log
 test.yml
 *.swp
+key_pair

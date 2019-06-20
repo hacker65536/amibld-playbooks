@@ -22,12 +22,17 @@
 
 ## testing 
 
+create key
+```console
+$ ssh-keygen -t rsa -N "" -C "" -f key_pair
+```
+
+enable log
 ```console
 $ touch ansible_log
 ```
-```console
-$ cp /path/key_pair .
-```
+
+edit ansible.cfg
 ```console
 $ cat <<'EOF' > ansible.cfg
 [defaults]
@@ -37,13 +42,25 @@ log_path=ansible_log
 private_key_file=keypair
 EOF
 ```
+
+edit variables for terraform to create testing env
 ```console
-$ cat <<'EOF' > hosts
-[amz2]
-172.31.24.xxx ansible_user=ec2-user
+$ cat <<'EOF' > env.auto.tfvars
+author  = "myname"
+region  = "us-east-1"
+profile = "<AWS_DEFAULT_PROFILE>"
+vpc     = "vpc-xxxxxxxx"
 EOF
 ```
 
+
+deploy env with terraform
+```console
+$ sh ope.sh start
+```
+
+
+testing ansible codes
 ```console
 $ cat <<'EOF' > test.yml
 - hosts: amz2
@@ -55,5 +72,5 @@ EOF
 ```
 
 ```console
-$ ansible-playbook -i hosts test.yml --extra-vars platform=amazonlinux2
+$ ansible-playbook -i inventory test.yml --extra-vars platform=amazonlinux2
 ```

@@ -1,5 +1,5 @@
 locals {
-  instance_type = "t2.micro"
+  instance_type = "t2.medium"
 }
 
 locals {
@@ -11,7 +11,7 @@ locals {
     ubuntu18 = data.aws_ami.ubuntu18.id
   }
 }
-resource "aws_instance" "ec2" {
+resource "aws_spot_instance_request" "ec2" {
   count                  = length(local.os)
   instance_type          = local.instance_type
   key_name               = aws_key_pair.key_pair.key_name
@@ -19,6 +19,11 @@ resource "aws_instance" "ec2" {
   subnet_id              = tolist(data.aws_subnet_ids.pub.ids)[0]
   vpc_security_group_ids = [data.aws_security_group.def.id]
   volume_tags            = local.tags
+
+  # spot
+  //spot_price             = "0.03"
+  spot_type            = "one-time"
+  wait_for_fulfillment = true
 
   root_block_device {
     volume_type           = "gp2"
@@ -30,6 +35,16 @@ resource "aws_instance" "ec2" {
     local.tags,
     map("Name", "${terraform.workspace}-${element(keys(local.os), count.index)}"),
   )
+
+
+
+  provisioner "local-exec" {
+    command = join("", formatlist("aws ec2 create-tags --resources ${self.spot_instance_id} --tags Key=\"%s\",Value=\"%s\" --region=${var.region}; ", keys(self.tags), values(self.tags)))
+    environment = {
+      AWS_DEFAULT_REGION  = var.region
+      AWS_DEFAULT_PROFILE = var.profile
+    }
+  }
 }
 
 
@@ -39,7 +54,7 @@ output "sub" {
 output "ips" {
   #  value = aws_instance.ec2[*].private_ip
   value = {
-    for inst in aws_instance.ec2 :
+    for inst in aws_spot_instance_request.ec2 :
     inst.tags["Name"] => inst.private_ip
   }
 }

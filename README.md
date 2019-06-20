@@ -24,6 +24,10 @@
 ![](./testingplaybook.png)
 
 create tag of subnet
+```
+Key: Tier
+Value: testing
+```
 
 create key
 ```console

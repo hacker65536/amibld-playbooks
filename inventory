@@ -1,0 +1,10 @@
+[amitest-amz]
+amz ansible_host=172.31.0.179 ansible_user=ec2-user
+[amitest-amz2]
+amz2 ansible_host=172.31.15.240 ansible_user=ec2-user
+[amitest-cent6]
+cent6 ansible_host=172.31.7.31 ansible_user=centos
+[amitest-cent7]
+cent7 ansible_host=172.31.14.183 ansible_user=centos
+[amitest-ubuntu18]
+ubuntu18 ansible_host=172.31.4.172 ansible_user=ubuntu

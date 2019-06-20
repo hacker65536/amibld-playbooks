@@ -3,12 +3,13 @@
 
 
 ```console
-$ cat <<'EOF' > env.auto.tfvars
+$ vim env.auto.tfvars
+```
+```ini
 author  = "myname"
 region  = "us-east-1"
 profile = "<AWS_DEFAULT_PROFILE>"
 vpc     = "vpc-xxxxxxxx"
-EOF
 ```
 
 

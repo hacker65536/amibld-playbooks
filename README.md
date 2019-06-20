@@ -99,3 +99,9 @@ EOF
 ```console
 $ ansible-playbook -i inventory test.yml --extra-vars platform=amazonlinux2
 ```
+
+
+cleaning
+```console
+$ sh ope.sh rm
+```

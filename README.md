@@ -39,7 +39,7 @@ $ cat <<'EOF' > ansible.cfg
 remote_user=centos
 host_key_checking = False
 log_path=ansible_log
-private_key_file=keypair
+private_key_file=key_pair
 EOF
 ```
 
@@ -56,10 +56,32 @@ EOF
 
 deploy env with terraform
 ```console
+$ sh ope.sh init (only first)
 $ sh ope.sh start
 ```
 
+check connection to host
+```console
+$ ansible -i inventory all -m ping
+```
 
+testing ansible codes
+```console
+$ cat <<'EOF' > test.yml
+- hosts: all
+  become: yes
+  roles:
+    - httpd
+EOF
+```
+
+```console
+$ ansible-playbook -i inventory test.yml 
+
+
+
+individual host
+```
 testing ansible codes
 ```console
 $ cat <<'EOF' > test.yml

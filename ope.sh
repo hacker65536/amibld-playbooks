@@ -17,4 +17,7 @@ case $1 in
 	list)
 		(cd $dir && terraform state list)
 		;;
+	init)
+		(cd $dir && terraform init)
+		;;
 esac

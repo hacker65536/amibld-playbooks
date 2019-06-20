@@ -4,6 +4,7 @@ ansible_log
 test.yml
 *.swp
 key_pair
+key_pair.pub
 
 #  Local .terraform directories
 **/.terraform/*
@@ -14,4 +15,5 @@ key_pair
 
 # .tfvars files
 *.tfvars
+!tf/ec2/env.auto.tfvars
 

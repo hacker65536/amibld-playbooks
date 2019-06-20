@@ -1,5 +1,5 @@
 ansible.cfg
-hosts
+inventory
 ansible_log
 test.yml
 *.swp

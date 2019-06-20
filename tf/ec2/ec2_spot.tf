@@ -33,7 +33,10 @@ resource "aws_spot_instance_request" "ec2" {
 
   tags = merge(
     local.tags,
-    map("Name", "${terraform.workspace}-${element(keys(local.os), count.index)}"),
+    map(
+      "Name", "${terraform.workspace}-${element(keys(local.os), count.index)}",
+      "Purpose", "testami",
+    ),
   )
 
 

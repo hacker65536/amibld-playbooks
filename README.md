@@ -77,12 +77,8 @@ EOF
 
 ```console
 $ ansible-playbook -i inventory test.yml 
-
-
-
-individual host
 ```
-testing ansible codes
+testing individual
 ```console
 $ cat <<'EOF' > test.yml
 - hosts: amz2

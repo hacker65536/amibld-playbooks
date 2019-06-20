@@ -1,0 +1,20 @@
+---
+
+- name: install MySQL (yum)
+  yum:
+    name:
+      - mysql-server
+    state: present
+    enablerepo:
+      - mysql{{ mysqlver | join() }}-community
+  when:
+    - ansible_os_family == "RedHat"
+
+      
+- name: install MySQL (APT)
+  apt:
+    name:
+      - mysql-server-{{ mysqlver | join('.') }}
+    state: present
+  when:
+    - ansible_os_family == "Debian"

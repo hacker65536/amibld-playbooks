@@ -1,0 +1,24 @@
+---
+
+- name: install MySQL Yum Repository(systemd)
+  yum:
+    name: https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+    state: present
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_service_mgr == "systemd"
+
+- name: install MySQL Yum Repository(upstart)
+  yum:
+    name: https://dev.mysql.com/get/mysql80-community-release-el6-3.noarch.rpm
+    state: present
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_service_mgr == "upstart"
+
+#- name: install MySQL APT Repository
+#  apt:
+#    name: https://dev.mysql.com/get/mysql-apt-config_0.8.13-1_all.deb
+#    state: present
+#  when:
+#    - ansible_os_family == "Debian"

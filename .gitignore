@@ -4,3 +4,14 @@ ansible_log
 test.yml
 *.swp
 key_pair
+
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfvars files
+*.tfvars
+

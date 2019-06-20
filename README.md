@@ -21,7 +21,7 @@
 
 
 ## testing 
-
+[](./testingplaybook.png)
 create key
 ```console
 $ ssh-keygen -t rsa -N "" -C "" -f key_pair

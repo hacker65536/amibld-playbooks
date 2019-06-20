@@ -21,7 +21,10 @@
 
 
 ## testing 
-[](./testingplaybook.png)
+![](./testingplaybook.png)
+
+create tag of subnet
+
 create key
 ```console
 $ ssh-keygen -t rsa -N "" -C "" -f key_pair

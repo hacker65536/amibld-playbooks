@@ -16,5 +16,11 @@ data "aws_ami" "amazonlinux" {
     values = ["gp2"]
   }
 
+  filter {
+    name = "architecture"
+
+    //values = ["arm64"]
+    values = ["x86_64"]
+  }
   owners = ["amazon"]
 }

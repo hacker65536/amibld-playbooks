@@ -20,4 +20,7 @@ case $1 in
 	init)
 		(cd $dir && terraform init && terraform workspace new amitest)
 		;;
+	chk)
+		(ansible -i inventory all -m ping)
+		;;
 esac

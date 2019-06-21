@@ -69,7 +69,8 @@ $ sh ope.sh start
 
 check connection to host
 ```console
-$ ansible -i inventory all -m ping
+$ sh ope.sh chk
+#ansible -i inventory all -m ping
 ```
 
 testing ansible codes
@@ -78,7 +79,7 @@ $ cat <<'EOF' > test.yml
 - hosts: all
   become: yes
   roles:
-    - httpd
+    - mysql8
 EOF
 ```
 

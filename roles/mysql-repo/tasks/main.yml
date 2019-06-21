@@ -16,9 +16,7 @@
     - ansible_os_family == "RedHat"
     - ansible_service_mgr == "upstart"
 
-#- name: install MySQL APT Repository
-#  apt:
-#    name: https://dev.mysql.com/get/mysql-apt-config_0.8.13-1_all.deb
-#    state: present
-#  when:
-#    - ansible_os_family == "Debian"
+- name: install MySQL APT Repository
+  include_tasks: mysql_repo_ubuntu.yml
+  when:
+    - ansible_distribution == "Ubuntu"

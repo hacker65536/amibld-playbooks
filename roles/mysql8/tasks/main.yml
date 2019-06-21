@@ -1,0 +1,6 @@
+---
+
+- include_role:
+    name: mysql
+  vars:
+    mysqlver: [8,0]

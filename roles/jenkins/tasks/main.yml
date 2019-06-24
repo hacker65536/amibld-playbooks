@@ -19,5 +19,6 @@
   yum:
     name: jenkins
     state: present
+    lock_timeout: 180
   when:
     - ansible_os_family == 'RedHat'

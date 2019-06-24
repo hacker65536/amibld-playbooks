@@ -1,0 +1,25 @@
+---
+#
+# require ncurses-compat-libs
+# 
+# Error: Package: php-cli-7.2.19-2.el7.remi.x86_64 (remi-php72)
+#           Requires: libncurses.so.5()(64bit)
+
+
+
+- name: install ncureses-compat-libs (libncurses.so.5(),libtinfo.so.5())
+  yum:
+    name: ncurses-compat-libs
+    state: present
+    lock_timeout: 180
+  when:
+  - ansible_distribution == "Amazon"
+  - ansible_distribution_major_version == "2"
+
+
+- name: install php72
+  include_role:
+    name: php
+  vars:
+    phpver: [7,2]
+

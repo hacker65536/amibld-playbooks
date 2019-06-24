@@ -1,0 +1,20 @@
+---
+
+- name: install Remi's RPM repository(systemd)
+  yum:
+    name: https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    state: present
+    lock_timeout: 180
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_service_mgr == "systemd"
+
+- name: install Remi's RPM repository(upstart)
+  yum:
+    name: https://rpms.remirepo.net/enterprise/remi-release-6.rpm
+    state: present
+    lock_timeout: 180
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_service_mgr == "upstart"
+

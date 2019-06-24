@@ -14,9 +14,10 @@
 
 
 - name: install epel-release with yum (exclude [amz2])
-  package:
+  yum:
     name: epel-release
     state: present
+    lock_timeout: 180
   when: 
   - ansible_os_family == 'RedHat'
   - not (ansible_distribution == "Amazon" and ansible_distribution_major_version == "2")

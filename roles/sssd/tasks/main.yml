@@ -1,13 +1,15 @@
 - name: sssd-ldap
-  yum: name={{ item }}
-  with_items:
-    - sssd
-    - openldap-clients
-    - sssd-ldap
-    - authconfig
+  yum: 
+    name:
+      - sssd
+      - openldap-clients
+      - sssd-ldap
+      - authconfig
+  lock_timeout: 180
 
 
 - name: sssd start
-  service: name=sssd
-   state=started
-   enabled=yes
+  service: 
+    name: sssd
+    state: started
+    enabled: yes

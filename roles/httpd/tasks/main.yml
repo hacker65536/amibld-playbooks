@@ -1,7 +1,17 @@
 - name: include vars from ansible os family
   include_vars: "{{ ansible_os_family }}.yml"
-- name: install httpd
-  package:
+
+- name: install httpd (yum)
+  yum:
     name: "{{ apache }}"
     state: present
+    lock_timeout: 180
+  when:
+    - ansible_os_family == "RedHat"
 
+- name: install httpd (APT)
+  apt:
+    name: "{{ apache }}"
+    state: present
+  when:
+    - ansible_os_family == "Debian"

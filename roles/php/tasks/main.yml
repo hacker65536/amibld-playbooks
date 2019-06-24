@@ -1,0 +1,28 @@
+---
+#- name: include vars from ansible os family
+#  include_vars: "{{ ansible_distribution }}{{ ansible_distribution_major_version }}.yml"
+
+- name: install php (yum)
+  yum:
+    name:
+      - php
+    state: present
+    enablerepo:
+      - remi-php{{ phpver | join() }}
+    disablerepo:
+      - "{% if (ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2') %}amzn2-core{% elif (ansible_distribution == 'Amazon' and ansible_service_mgr == 'upstart') %}amzn-main{% else %}{% endif %}"
+
+    lock_timeout: 180
+  when:
+    - ansible_os_family == "RedHat"
+
+
+- name: install php (APT)
+  apt:
+    name:
+      - php{{ phpver | join('.') }}
+    state: present
+  when:
+    - ansible_os_family == "Debian"
+
+
